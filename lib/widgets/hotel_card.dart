@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../screens/hotel_details_screen.dart';
 
 class HotelCard extends StatelessWidget {
   final String name;
@@ -18,7 +19,23 @@ class HotelCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return InkWell(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => HotelDetailsScreen(
+                name: name,
+                location: location,
+                price: price,
+                rating: rating,
+                image: image,
+              ),
+            ),
+          );
+        },
+        child: Card(
+
       margin: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       elevation: 4,
       child: Column(
@@ -63,6 +80,6 @@ class HotelCard extends StatelessWidget {
           )
         ],
       ),
-    );
+    ));
   }
 }
