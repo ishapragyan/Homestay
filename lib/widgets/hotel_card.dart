@@ -41,11 +41,14 @@ class HotelCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.network(
-            image,
-            height: 180,
-            width: double.infinity,
-            fit: BoxFit.cover,
+          Hero(
+            tag: image,
+            child: Image.network(
+              image,
+              height: 180,
+              width: double.infinity,
+              fit: BoxFit.cover,
+            ),
           ),
           Padding(
             padding: EdgeInsets.all(10),

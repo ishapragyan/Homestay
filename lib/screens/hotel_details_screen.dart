@@ -25,11 +25,14 @@ class HotelDetailsScreen extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.network(
-            image,
-            height: 250,
-            width: double.infinity,
-            fit: BoxFit.cover,
+          Hero(
+            tag: image,
+            child: Image.network(
+              image,
+              height: 250,
+              width: double.infinity,
+              fit: BoxFit.cover,
+            ),
           ),
 
           Padding(
