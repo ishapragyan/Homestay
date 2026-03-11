@@ -58,26 +58,82 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text("StayEase Hotels"),
       ),
-      body: Column(
-        children: [
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
 
-          Padding(
-            padding: EdgeInsets.all(12),
-            child: TextField(
-              controller: searchController,
-              decoration: InputDecoration(
-                hintText: "Search hotels or cities",
-                prefixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
+            // SEARCH BAR
+            Padding(
+              padding: EdgeInsets.all(12),
+              child: TextField(
+                controller: searchController,
+                decoration: InputDecoration(
+                  hintText: "Search hotels or cities",
+                  prefixIcon: Icon(Icons.search),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                onChanged: searchHotels,
+              ),
+            ),
+
+            // FEATURED TITLE
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 12),
+              child: Text(
+                "Featured Hotels",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-              onChanged: searchHotels,
             ),
-          ),
 
-          Expanded(
-            child: ListView.builder(
+            SizedBox(height: 10),
+
+            // FEATURED HOTELS HORIZONTAL LIST
+            SizedBox(
+              height: 300,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: featuredHotels.length,
+                itemBuilder: (context, index) {
+                  final hotel = featuredHotels[index];
+
+                  return SizedBox(
+                    width: 300,
+                    child: HotelCard(
+                      name: hotel.name,
+                      location: hotel.location,
+                      price: hotel.price,
+                      rating: hotel.rating,
+                      image: hotel.image,
+                    ),
+                  );
+                },
+              ),
+            ),
+
+            SizedBox(height: 20),
+
+            // ALL HOTELS TITLE
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 12),
+              child: Text(
+                "All Hotels",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+
+            // HOTEL LIST
+            ListView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
               itemCount: filteredHotels.length,
               itemBuilder: (context, index) {
                 final hotel = filteredHotels[index];
@@ -91,10 +147,25 @@ class _HomePageState extends State<HomePage> {
                 );
               },
             ),
-          )
-
-        ],
+          ],
+        ),
       ),
     );
   }
+  final List<Hotel> featuredHotels = [
+    Hotel(
+      name: "Luxury Sea Resort",
+      location: "Goa",
+      price: 220,
+      rating: 4.8,
+      image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d",
+    ),
+    Hotel(
+      name: "Mountain Paradise",
+      location: "Manali",
+      price: 180,
+      rating: 4.7,
+      image: "https://images.unsplash.com/photo-1566073771259-6a8506099945",
+    ),
+  ];
 }

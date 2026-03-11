@@ -29,6 +29,9 @@ class HotelDetailsScreen extends StatelessWidget {
             tag: image,
             child: Image.network(
               image,
+              errorBuilder: (context, error, stackTrace) {
+                return Icon(Icons.broken_image, size: 50); // Fallback icon
+              },
               height: 250,
               width: double.infinity,
               fit: BoxFit.cover,

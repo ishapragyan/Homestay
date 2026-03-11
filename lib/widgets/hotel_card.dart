@@ -73,6 +73,7 @@ class HotelCard extends StatelessWidget {
                       style: TextStyle(
                         color: Colors.blue,
                         fontWeight: FontWeight.bold,
+
                       ),
                     ),
                     Text("⭐ $rating")
