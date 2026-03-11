@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../screens/hotel_details_screen.dart';
+import '../models/hotel.dart';
 
 class HotelCard extends StatelessWidget {
   final String name;
@@ -7,6 +8,8 @@ class HotelCard extends StatelessWidget {
   final int price;
   final double rating;
   final String image;
+  final bool isFavorite;
+  final VoidCallback onFavoriteToggle;
 
   const HotelCard({
     Key? key,
@@ -15,6 +18,8 @@ class HotelCard extends StatelessWidget {
     required this.price,
     required this.rating,
     required this.image,
+    required this.isFavorite,
+    required this.onFavoriteToggle,
   }) : super(key: key);
 
   @override
@@ -68,15 +73,30 @@ class HotelCard extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+
                     Text(
                       "₹$price/night",
                       style: TextStyle(
                         color: Colors.blue,
                         fontWeight: FontWeight.bold,
-
                       ),
                     ),
-                    Text("⭐ $rating")
+
+                    Row(
+                      children: [
+                        Text("⭐ $rating"),
+                        SizedBox(width: 10),
+
+                        GestureDetector(
+                          onTap: onFavoriteToggle,
+                          child: Icon(
+                            isFavorite ? Icons.favorite : Icons.favorite_border,
+                            color: isFavorite ? Colors.red : Colors.grey,
+                          ),
+                        ),
+                      ],
+                    ),
+
                   ],
                 )
               ],
