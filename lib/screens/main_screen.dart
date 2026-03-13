@@ -9,7 +9,16 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-
+  Set<String> favoriteHotels = {};
+  void toggleFavorite(String hotelName) {
+    setState(() {
+      if (favoriteHotels.contains(hotelName)) {
+        favoriteHotels.remove(hotelName);
+      } else {
+        favoriteHotels.add(hotelName);
+      }
+    });
+  }
   int currentIndex = 0;
 
   final List<Widget> screens = [
