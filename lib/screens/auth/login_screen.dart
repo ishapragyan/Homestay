@@ -8,9 +8,8 @@ class LoginScreen extends StatefulWidget {
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
-} // <--- CLOSE the LoginScreen class here!
+}
 
-// This class must be outside at the top level
 class _LoginScreenState extends State<LoginScreen> {
 
 final TextEditingController emailController = TextEditingController();

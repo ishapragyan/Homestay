@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'screens/home_screen.dart';
-import 'screens/main_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
-
+import 'screens/auth/login_screen.dart';
+import 'screens/main_screen.dart';
+import 'services/auth_service.dart';
 
 
 void main() async {
@@ -16,15 +16,23 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+
+  final AuthService authService = AuthService();
+
+  MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
+
+    final user = authService.getCurrentUser();
+
     return MaterialApp(
-      title: 'StayEase',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MainScreen(),
+
+      home: user == null
+          ? LoginScreen()
+          : MainScreen(),
+
     );
   }
 }
