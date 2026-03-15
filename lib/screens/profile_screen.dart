@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../services/auth_service.dart';
+import 'auth/login_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
 
@@ -6,13 +8,28 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Profile"),
+        title: const Text("Profile"),
       ),
       body: Center(
-        child: Text(
-          "User profile page",
-          style: TextStyle(fontSize: 16),
+        child: ElevatedButton(
+          onPressed: () {
+            logoutUser(context);
+          },
+          child: const Text("Logout"),
         ),
+      ),
+    );
+  }
+
+
+  final AuthService authService = AuthService();
+  Future<void> logoutUser(BuildContext context) async {
+    await authService.signOut();
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => LoginScreen(),
       ),
     );
   }
