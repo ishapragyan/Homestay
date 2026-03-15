@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "647811447168",
+    "project_id": "stayease-29a23",
+    "storage_bucket": "stayease-29a23.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:647811447168:android:85f90832e602789311e965",
+        "android_client_info": {
+          "package_name": "com.example.homestay"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUcJ9PJ_1yx4SyZQiiTwqrObsMv2P-24A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
