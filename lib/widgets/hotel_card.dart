@@ -4,24 +4,16 @@ import '../screens/hotel_details_screen.dart';
 import '../models/hotel.dart';
 
 class HotelCard extends StatelessWidget {
-  final String name;
-  final String location;
-  final int price;
-  final double rating;
-  final String image;
+  final Hotel hotel;
   final bool isFavorite;
   final VoidCallback onFavoriteToggle;
 
   const HotelCard({
-    Key? key,
-    required this.name,
-    required this.location,
-    required this.price,
-    required this.rating,
-    required this.image,
+    super.key,
+    required this.hotel,
     required this.isFavorite,
     required this.onFavoriteToggle,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -31,11 +23,11 @@ class HotelCard extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) => HotelDetailsScreen(
-                name: name,
-                location: location,
-                price: price,
-                rating: rating,
-                image: image,
+                name: hotel.name,
+                location: hotel.location,
+                price: hotel.price,
+                rating: hotel.rating,
+                image: hotel.image,
               ),
             ),
           );
@@ -48,9 +40,9 @@ class HotelCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Hero(
-            tag: image,
+            tag: hotel.image,
             child: Image.network(
-              image,
+              hotel.image,
               height: 180,
               width: double.infinity,
               fit: BoxFit.cover,
@@ -62,21 +54,21 @@ class HotelCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  name,
+                  hotel.name,
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 SizedBox(height: 5),
-                Text(location),
+                Text(hotel.location),
                 SizedBox(height: 5),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
 
                     Text(
-                      "₹$price/night",
+                      "₹$hotel.price/night",
                       style: TextStyle(
                         color: Colors.blue,
                         fontWeight: FontWeight.bold,
@@ -85,7 +77,7 @@ class HotelCard extends StatelessWidget {
 
                     Row(
                       children: [
-                        Text("⭐ $rating"),
+                        Text("⭐ $hotel.rating"),
                         SizedBox(width: 10),
 
                         GestureDetector(

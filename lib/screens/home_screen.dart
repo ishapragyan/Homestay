@@ -4,9 +4,11 @@ import '../models/hotel.dart';
 import '../data/hotel_data.dart';
 
 class HomePage extends StatefulWidget {
+
   @override
   State<HomePage> createState() => _HomePageState();
 }
+
 
 class _HomePageState extends State<HomePage> {
   Set<String> favoriteHotels = {};
@@ -93,11 +95,7 @@ class _HomePageState extends State<HomePage> {
                   return SizedBox(
                     width: 300,
                     child: HotelCard(
-                      name: hotel.name,
-                      location: hotel.location,
-                      price: hotel.price,
-                      rating: hotel.rating,
-                      image: hotel.image,
+                      hotel: hotel,
                       isFavorite: favoriteHotels.contains(hotel.name),
                       onFavoriteToggle: () => toggleFavorite(hotel.name),
                     )
@@ -130,16 +128,9 @@ class _HomePageState extends State<HomePage> {
                 final hotel = filteredHotels[index];
 
                 return HotelCard(
-                  name: hotel.name,
-                  location: hotel.location,
-                  price: hotel.price,
-                  rating: hotel.rating,
-                  image: hotel.image,
-                  // These are the new requirements:
+                  hotel: hotel,
                   isFavorite: favoriteHotels.contains(hotel.name),
                   onFavoriteToggle: () => toggleFavorite(hotel.name),
-
-
                 );
               },
             ),

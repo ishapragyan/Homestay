@@ -3,6 +3,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'screens/auth/login_screen.dart';
 import 'screens/main_screen.dart';
 import 'services/auth_service.dart';
+import 'package:provider/provider.dart';
+import 'providers/auth_provider.dart';
 
 
 void main() async {
@@ -16,23 +18,19 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-
-  final AuthService authService = AuthService();
-
-  MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
-
-    final user = authService.getCurrentUser();
-
-    return MaterialApp(
+    return MultiProvider(
+        providers: [
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
+    ],
+      child: MaterialApp(
+      title: 'HomeStay',
       debugShowCheckedModeBanner: false,
-
-      home: user == null
-          ? LoginScreen()
-          : MainScreen(),
-
-    );
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: LoginScreen(),
+    ));
   }
 }

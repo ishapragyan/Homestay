@@ -1,45 +1,50 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-
+  // SIGN UP
   Future<User?> signUp(String email, String password) async {
     try {
-
-      UserCredential userCredential =
-      await _auth.createUserWithEmailAndPassword(
+      final credential =
+      await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
 
-      return userCredential.user;
-
+      return credential.user;
     } catch (e) {
       print(e);
       return null;
     }
   }
+
+  // SIGN IN
   Future<User?> signIn(String email, String password) async {
     try {
-
-      UserCredential userCredential =
-      await _auth.signInWithEmailAndPassword(
+      final credential =
+      await _firebaseAuth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
 
-      return userCredential.user;
-
+      return credential.user;
     } catch (e) {
       print(e);
       return null;
     }
   }
+
+  // SIGN OUT
   Future<void> signOut() async {
-    await _auth.signOut();
+    await _firebaseAuth.signOut();
   }
+
+  // CURRENT USER
   User? getCurrentUser() {
-    return _auth.currentUser;
+    return _firebaseAuth.currentUser;
   }
+
+  // AUTH STATE STREAM
+  Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
 }
