@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../providers/favorites_provider.dart';
+import '../widgets/hotel_card.dart';
 
 class FavoritesScreen extends StatelessWidget {
 
@@ -8,12 +11,30 @@ class FavoritesScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text("Favorites"),
       ),
-      body: Center(
-        child: Text(
-          "Your favorite hotels will appear here",
-          style: TextStyle(fontSize: 16),
-        ),
-      ),
+      body: Consumer<FavoritesProvider>(
+        builder: (context, favProvider, child) {
+
+          final favorites = favProvider.favorites;
+
+          if (favorites.isEmpty) {
+            return const Center(
+              child: Text("No favorites yet"),
+            );
+          }
+
+          return ListView.builder(
+            itemCount: favorites.length,
+            itemBuilder: (context, index) {
+
+              final hotel = favorites[index];
+
+              return HotelCard(
+                  hotel: hotel,
+              );
+            },
+          );
+        },
+      )
     );
   }
 }

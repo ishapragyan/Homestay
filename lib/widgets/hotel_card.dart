@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import '../screens/hotel_details_screen.dart';
-
+import 'package:provider/provider.dart';
+import '../providers/favorites_provider.dart';
 import '../models/hotel.dart';
 
 class HotelCard extends StatelessWidget {
   final Hotel hotel;
-  final bool isFavorite;
-  final VoidCallback onFavoriteToggle;
+
 
   const HotelCard({
     super.key,
     required this.hotel,
-    required this.isFavorite,
-    required this.onFavoriteToggle,
+
   });
 
   @override
@@ -22,13 +21,7 @@ class HotelCard extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => HotelDetailsScreen(
-                name: hotel.name,
-                location: hotel.location,
-                price: hotel.price,
-                rating: hotel.rating,
-                image: hotel.image,
-              ),
+              builder: (_) => HotelDetailsScreen(hotel: hotel),
             ),
           );
         },
@@ -39,6 +32,7 @@ class HotelCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+
           Hero(
             tag: hotel.image,
             child: Image.network(
@@ -47,6 +41,7 @@ class HotelCard extends StatelessWidget {
               width: double.infinity,
               fit: BoxFit.cover,
             ),
+
           ),
           Padding(
             padding: EdgeInsets.all(10),
@@ -68,7 +63,7 @@ class HotelCard extends StatelessWidget {
                   children: [
 
                     Text(
-                      "₹$hotel.price/night",
+                      "₹${hotel.price}/night",
                       style: TextStyle(
                         color: Colors.blue,
                         fontWeight: FontWeight.bold,
@@ -77,15 +72,23 @@ class HotelCard extends StatelessWidget {
 
                     Row(
                       children: [
-                        Text("⭐ $hotel.rating"),
-                        SizedBox(width: 10),
+                        Text("⭐ ${hotel.rating}"),
+                        const SizedBox(width: 10),
 
-                        GestureDetector(
-                          onTap: onFavoriteToggle,
-                          child: Icon(
-                            isFavorite ? Icons.favorite : Icons.favorite_border,
-                            color: isFavorite ? Colors.red : Colors.grey,
-                          ),
+                        Consumer<FavoritesProvider>(
+                          builder: (context, favProvider, child) {
+                            final isFav = favProvider.isFavorite(hotel);
+
+                            return GestureDetector(
+                              onTap: () {
+                                favProvider.toggleFavorite(hotel);
+                              },
+                              child: Icon(
+                                isFav ? Icons.favorite : Icons.favorite_border,
+                                color: isFav ? Colors.red : Colors.grey,
+                              ),
+                            );
+                          },
                         ),
                       ],
                     ),

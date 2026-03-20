@@ -22,4 +22,9 @@ class AuthProvider with ChangeNotifier {
     user = null;
     notifyListeners();
   }
+
+  void loadCurrentUser() {
+    user = _authService.getCurrentUser();
+    notifyListeners();
+  }
 }

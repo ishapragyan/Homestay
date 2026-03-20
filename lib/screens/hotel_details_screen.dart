@@ -1,34 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:homestay/models/hotel.dart';
 
 class HotelDetailsScreen extends StatelessWidget {
-  final String name;
-  final String location;
-  final int price;
-  final double rating;
-  final String image;
+  final Hotel hotel;
 
-  const HotelDetailsScreen({
-    Key? key,
-    required this.name,
-    required this.location,
-    required this.price,
-    required this.rating,
-    required this.image,
-  }) : super(key: key);
+  const HotelDetailsScreen({super.key, required this.hotel});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(name),
+        title: Text(hotel.name),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Hero(
-            tag: image,
+            tag: hotel.image,
             child: Image.network(
-              image,
+              hotel.image,
               errorBuilder: (context, error, stackTrace) {
                 return Icon(Icons.broken_image, size: 50); // Fallback icon
               },
@@ -44,7 +34,7 @@ class HotelDetailsScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  name,
+                  hotel.name,
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -54,7 +44,7 @@ class HotelDetailsScreen extends StatelessWidget {
                 SizedBox(height: 10),
 
                 Text(
-                  location,
+                  hotel.location,
                   style: TextStyle(
                     fontSize: 16,
                     color: Colors.grey[600],
@@ -64,14 +54,14 @@ class HotelDetailsScreen extends StatelessWidget {
                 SizedBox(height: 10),
 
                 Text(
-                  "⭐ $rating",
+                  "⭐ ${hotel.rating}",
                   style: TextStyle(fontSize: 16),
                 ),
 
                 SizedBox(height: 10),
 
                 Text(
-                  "₹$price per night",
+                  "₹${hotel.price} per night",
                   style: TextStyle(
                     fontSize: 18,
                     color: Colors.blue,

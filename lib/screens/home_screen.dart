@@ -1,17 +1,29 @@
 import 'package:flutter/material.dart';
 import '../widgets/hotel_card.dart';
 import '../models/hotel.dart';
-import '../data/hotel_data.dart';
+import 'package:provider/provider.dart';
+import '../providers/hotel_provider.dart';
 
 class HomePage extends StatefulWidget {
+  const HomePage({super.key}); // Added Key
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
-
 class _HomePageState extends State<HomePage> {
   Set<String> favoriteHotels = {};
+  TextEditingController searchController = TextEditingController();
+  List<Hotel> displayedHotels = [];
+
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() {
+      Provider.of<HotelProvider>(context, listen: false).fetchHotels();
+    });
+  }
+
   void toggleFavorite(String hotelName) {
     setState(() {
       if (favoriteHotels.contains(hotelName)) {
@@ -21,14 +33,9 @@ class _HomePageState extends State<HomePage> {
       }
     });
   }
-  TextEditingController searchController = TextEditingController();
-  List<Hotel> filteredHotels = [];
-  @override
-  void initState() {
-    super.initState();
-    filteredHotels = hotels;
-  }void searchHotels(String query) {
-    final results = hotels.where((hotel) {
+
+  void searchHotels(String query, List<Hotel> allHotels) {
+    final results = allHotels.where((hotel) {
       final name = hotel.name.toLowerCase();
       final location = hotel.location.toLowerCase();
       final input = query.toLowerCase();
@@ -37,18 +44,22 @@ class _HomePageState extends State<HomePage> {
     }).toList();
 
     setState(() {
-      filteredHotels = results;
+      displayedHotels = results;
     });
   }
-  final hotels = HotelData.hotels;
 
   @override
   Widget build(BuildContext context) {
+    final hotelProvider = Provider.of<HotelProvider>(context);
+    final hotels = hotelProvider.hotels; // dynamic
+    final displayHotels = searchController.text.isEmpty ? hotels : displayedHotels;
     return Scaffold(
       appBar: AppBar(
-        title: Text("StayEase Hotels"),
+        title: Text("HomeStay Hotels"),
       ),
-      body: SingleChildScrollView(
+      body: hotelProvider.isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -65,9 +76,10 @@ class _HomePageState extends State<HomePage> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                onChanged: searchHotels,
+                onChanged: (value) => searchHotels(value, hotels),
               ),
             ),
+
 
             // FEATURED TITLE
             Padding(
@@ -88,24 +100,17 @@ class _HomePageState extends State<HomePage> {
               height: 300,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: featuredHotels.length,
+                itemCount: hotels.length,
                 itemBuilder: (context, index) {
-                  final hotel = featuredHotels[index];
-
                   return SizedBox(
                     width: 300,
-                    child: HotelCard(
-                      hotel: hotel,
-                      isFavorite: favoriteHotels.contains(hotel.name),
-                      onFavoriteToggle: () => toggleFavorite(hotel.name),
-                    )
-                    );
-
+                    child: HotelCard(hotel: hotels[index]),
+                  );
                 },
               ),
             ),
 
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             // ALL HOTELS TITLE
             Padding(
@@ -122,16 +127,10 @@ class _HomePageState extends State<HomePage> {
             // HOTEL LIST
             ListView.builder(
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: filteredHotels.length,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: displayHotels.length,
               itemBuilder: (context, index) {
-                final hotel = filteredHotels[index];
-
-                return HotelCard(
-                  hotel: hotel,
-                  isFavorite: favoriteHotels.contains(hotel.name),
-                  onFavoriteToggle: () => toggleFavorite(hotel.name),
-                );
+                return HotelCard(hotel: displayHotels[index]);
               },
             ),
           ],
@@ -146,7 +145,7 @@ class _HomePageState extends State<HomePage> {
       price: 220,
       rating: 4.8,
       image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d",
-      isFavorite: false, onFavoriteToggle: () {  },
+
 
     ),
     Hotel(
@@ -155,7 +154,7 @@ class _HomePageState extends State<HomePage> {
       price: 180,
       rating: 4.7,
       image: "https://images.unsplash.com/photo-1566073771259-6a8506099945",
-      isFavorite: false, onFavoriteToggle: () {  },
+
     ),
   ];
 }
