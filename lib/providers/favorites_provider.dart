@@ -32,4 +32,9 @@ class FavoritesProvider extends ChangeNotifier {
       addFavorite(hotel);
     }
   }
+  void clearFavorites() {
+    _favorites.clear();
+    // This is crucial: it tells the Consumer to rebuild the UI
+    notifyListeners();
+  }
 }

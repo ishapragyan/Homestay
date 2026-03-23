@@ -27,4 +27,23 @@ class AuthProvider with ChangeNotifier {
     user = _authService.getCurrentUser();
     notifyListeners();
   }
+
+  Future<void> updateUserProfile(String newName) async {
+    try {
+      // Update Firebase Auth display name
+      await user?.updateDisplayName(newName);
+
+      // Reload user to get the latest data
+      await user?.reload();
+      user = _authService.getCurrentUser();
+
+      // Optional: If you store user data in Firestore, update it here too
+      // await _db.collection('users').doc(_user!.uid).update({'name': newName});
+
+      notifyListeners();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
 }

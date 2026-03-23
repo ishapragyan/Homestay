@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+// lib/models/hotel.dart
 
 class Hotel {
   final String name;
@@ -14,4 +14,15 @@ class Hotel {
     required this.rating,
     required this.image,
   });
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+          other is Hotel &&
+              runtimeType == other.runtimeType &&
+              name == other.name &&
+              location == other.location;
+
+  @override
+  int get hashCode => name.hashCode ^ location.hashCode;
 }

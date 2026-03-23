@@ -64,7 +64,7 @@ class HotelDetailsScreen extends StatelessWidget {
                   "₹${hotel.price} per night",
                   style: TextStyle(
                     fontSize: 18,
-                    color: Colors.blue,
+                    color: Color(0xFF002366),
                     fontWeight: FontWeight.bold,
                   ),
                 ),
