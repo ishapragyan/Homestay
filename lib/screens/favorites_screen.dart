@@ -13,7 +13,7 @@ class FavoritesScreen extends StatelessWidget {
     return Scaffold(
         backgroundColor: const Color(0xFFF8FAF9),
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(100.0),
+        preferredSize: const Size.fromHeight(60.0),
         child: AppBar(
           backgroundColor: brandColor,
           elevation: 0,
@@ -24,8 +24,7 @@ class FavoritesScreen extends StatelessWidget {
             title: Text(
               "Favorites", // Changed to Favorites for this screen
               style: TextStyle(
-                fontFamily: 'HomeStayFont',
-                fontSize: 30,
+                fontSize: 18,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),

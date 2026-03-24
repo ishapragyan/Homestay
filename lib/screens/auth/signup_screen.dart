@@ -75,12 +75,27 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
               const SizedBox(height: 20),
 
-              const Text(
-                "Join HomeStay",
-                style: TextStyle(
-                  fontSize: 26,
-                  fontWeight: FontWeight.w300,
-                  color: Color(0xFF002366),
+              Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(
+                      text: "Join ",
+                      style: TextStyle(
+                        fontSize: 26,
+                        fontWeight: FontWeight.w300,
+                        color: Color(0xFF002366),
+                      ),
+                    ),
+                    TextSpan(
+                      text: "HomeStay",
+                      style: TextStyle(
+                        fontSize: 26,
+                        fontWeight: FontWeight.w800,
+                        color: Color(0xFF002366),
+                        fontFamily: 'HomeStayFont',
+                      ),
+                    ),
+                  ],
                 ),
               ),
               const SizedBox(height: 10),
